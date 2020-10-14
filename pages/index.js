@@ -8,7 +8,6 @@ const Home = () => {
   const [title, setTitle] = useState("Korima Food " + emojisList[0] )
 
   
-  
   useEffect(() => {
     let emojiIndex = 0
     setInterval(() => {
@@ -18,11 +17,10 @@ const Home = () => {
       }, 1300);
     }, [])
 
-
   return (
     <div className="container">
       <NextSeo
-      title="Korima Food - Comida en Chihuahua México"
+      title={title}  
       description="Encuentra lugares de comida en la ciudad de Chihuahua México"
       canonical="https://www.korimafood.com/"
       openGraph={{
