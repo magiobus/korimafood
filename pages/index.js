@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="container">
       <NextSeo
-      title="Korima Food 🌮 | Comida en Chihuahua México"
+      title="Korima Food - Comida en Chihuahua México"
       description="Encuentra lugares de comida en la ciudad de Chihuahua México"
       canonical="https://www.korimafood.com/"
       openGraph={{
