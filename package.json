@@ -12,6 +12,7 @@
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "emotion-theming": "^10.0.27",
+    "google-spreadsheet": "^3.0.13",
     "next": "9.5.3",
     "next-seo": "^4.11.0",
     "react": "16.13.1",
