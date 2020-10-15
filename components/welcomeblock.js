@@ -1,42 +1,42 @@
-const chihuahuaSheetUrl = process.env.NEXT_PUBLIC_CUU_SHEET_URL //ChihuahuaCity Places
-
-import {useState} from 'react'
+//Impot Components
 import { Flex, Box, Heading, Text, Button, CircularProgress, useToast} from '@chakra-ui/core';
-import {parseSheetJson} from '../lib/sheetparser'
 import Place from './place'
+//Import functions
 import axios from 'axios'
+import {useState} from 'react'
+import {parseSheetJson} from '../lib/sheetparser'
+//Import Variables
+const chihuahuaSheetUrl = process.env.NEXT_PUBLIC_CUU_SHEET_URL //ChihuahuaCity Places
 
 
 const WelcomeBlock = props => {
-
-    const {heading, description, buttonText} = props
-    const [isLoading, setIsLoading] = useState(false)
-    const [showPlace, setShowPlace] = useState(false)
+    const toast = useToast(); //toast for showing errors
+    
+    //------STATES---------//
+    const [status, setStatus] = useState({isLoading: false,  showPlace: false })
     const [places, setPlaces] = useState([])
-    const toast = useToast();
 
-
+    //----- EVENTS -----//
     const handleClick = async () => {
-        setIsLoading(true)
+        setStatus({...status, isLoading: true})
         try {
             let response = await axios.get(chihuahuaSheetUrl)
             let placesData = parseSheetJson(response)
             console.log("placesData =>", placesData)
             setPlaces(placesData) //saves places list in state
-            setIsLoading(false)
-            setShowPlace(true)
+            setStatus({...status, isLoading: false, showPlace: true}) //updates State
+
         } catch (error) {
             console.log("error =>", error)
-            setIsLoading(false)
-            setShowPlace(false)
+            setStatus({...status, isLoading: false, showPlace: false})
             ShowErrorToast(toast, "Ocurrió un error", "No pudimos traer tu recomendación u.u")
         }        
     }
 
-    //Shows Toast Eror
-    const ShowErrorToast = (toast, title, description) => {
-        toast({ title: title, description: description, status: "warning", duration: 9000, isClosable: true })
-    }
+    //object deconstructions from state and props
+    const {heading, description, buttonText} = props
+    const {showPlace, isLoading} = status;
+
 
     return ( 
         <Flex align="center" justify="center" direction="column" mx={2} >
@@ -49,7 +49,12 @@ const WelcomeBlock = props => {
                 </>
                 )}
 
-                {isLoading && ( <CircularProgress isIndeterminate color="red"></CircularProgress> )}
+                {isLoading && ( 
+                    <Box>
+                        <CircularProgress isIndeterminate color="red"></CircularProgress> 
+                        <Text><b>Corriendo por toda la ciudad.....</b> </Text>
+                    </Box>
+                )}
 
                 {(showPlace && !isLoading) && (
                     <Place/>
@@ -60,3 +65,10 @@ const WelcomeBlock = props => {
 }
  
 export default WelcomeBlock;
+
+// ------------------FUNCTIONS--------------
+
+//Function to Show Toast Eror
+const ShowErrorToast = (toast, title, description) => {
+    toast({ title: title, description: description, status: "warning", duration: 9000, isClosable: true })
+}
