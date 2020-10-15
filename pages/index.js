@@ -7,7 +7,7 @@ const Home = () => {
   let emojisList = ["🌮", "🌯", "🥑", "🍰", "🍺", "🍔", "🍜", "🥩", "🥦", "🥙"]
   const [title, setTitle] = useState("Korima Food " + emojisList[0] )
 
-  
+
   useEffect(() => {
     let emojiIndex = 0
     setInterval(() => {
@@ -16,6 +16,8 @@ const Home = () => {
       setTitle("Korima Food " + emojisList[emojiIndex])
       }, 1300);
     }, [])
+
+    
 
   return (
     <div className="container">
