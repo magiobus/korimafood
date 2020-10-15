@@ -57,7 +57,7 @@ const WelcomeBlock = props => {
                 )}
 
                 {(showPlace && !isLoading) && (
-                    <Place/>
+                    <Place places={places} setPlaces={setPlaces}/>
                 )}
             </Box>
         </Flex>
