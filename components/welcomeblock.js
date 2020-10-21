@@ -1,5 +1,5 @@
 //Impot Components
-import { Flex, Box, Heading, Text, Button, useToast, Tag} from '@chakra-ui/core';
+import { Flex, Box, Heading, Text, Button, useToast, Select} from '@chakra-ui/core';
 import Place from './place'
 import Loading from './loading'
 //Import functions
@@ -7,7 +7,17 @@ import axios from 'axios'
 import {useState} from 'react'
 import {parseSheetJson} from '../lib/sheetparser'
 //Import Variables
-const chihuahuaSheetUrl = process.env.NEXT_PUBLIC_CUU_SHEET_URL //ChihuahuaCity Places
+
+const sheetsUrls = {
+    "chihuahua": process.env.NEXT_PUBLIC_CUU_SHEET_URL, 
+    "juarez": process.env.NEXT_PUBLIC_JUAREZ_SHEET_URL,
+    "elpaso": process.env.NEXT_PUBLIC_ELP_SHEET_URL,
+    "cuauhtemoc": process.env.NEXT_PUBLIC_CUAUHTEMOC_SHEET_URL,
+    "parral": process.env.NEXT_PUBLIC_PARRAL_SHEET_URL,
+    "delicias": process.env.NEXT_PUBLIC_DELICIAS_SHEET_URL,
+    "meoqui": process.env.NEXT_PUBLIC_MEOQUI_SHEET_URL,
+    "creel": process.env.NEXT_PUBLIC_CREEL_SHEET_URL,
+}
 
 
 const WelcomeBlock = props => {
@@ -16,13 +26,21 @@ const WelcomeBlock = props => {
     //------STATES---------//
     const [status, setStatus] = useState({isLoading: false,  showPlace: false })
     const [places, setPlaces] = useState([])
+    const [searchPlace, setSearchPlace] = useState('')
 
     //----- EVENTS -----//
-    const handleClick = async () => {
-        setStatus({...status, isLoading: true})
 
+
+    const handleClick = async () => {
+
+        if(!searchPlace){
+            ShowErrorToast(toast, "Tienes que elegir una ciudad....")
+            return;
+        }
+
+        setStatus({...status, isLoading: true})
             try {
-                let response = await axios.get(chihuahuaSheetUrl)
+                let response = await axios.get(sheetsUrls[searchPlace])
                 let placesData = parseSheetJson(response)
                 setPlaces(placesData) //saves places list in state
                 setStatus({...status, isLoading: false, showPlace: true}) //updates State
@@ -42,16 +60,24 @@ const WelcomeBlock = props => {
             {/* ------ Home Landing Component ----- */}
             {(!showPlace && !isLoading) && (
                 <Flex align="center" justify="center" direction="column" mx={2} >
-                    <Box textAlign="center" bg="gray.50" borderWidth="1px" rounded="10px" p={5}>
-                        <>
+                    <Box textAlign="center" bg="gray.50" borderWidth="1px" rounded="10px" p={5} width="100%">
                             <Heading as="h1" size={["2xl"]} color="red.500" mb={3}>{heading}</Heading>
-                            <Text textAlign="center" m={0} fontSize={["lg", "xl", "2xl"]} align="center" color="gray.600">
+                            <Text textAlign="center" m={0} fontSize={["lg", "xl", "2xl"]} align="center" color="gray.600" width="100%">
                                 <b>{description} 
-                                    <Tag variantColor="red" rounded="10px" mt={2} px={4} py={2}>{place}</Tag>
+                                    <Text color="red.300"  width="100%" mt={2} px={4} py={2}>{place}</Text>
                                 </b>
                             </Text>
-                            <Button variantColor="red"  my={19} size={["lg"]} onClick={(e) => {handleClick(e)}}>{buttonText}</Button>
-                        </>
+                               <Select placeholder="Elige una ciudad 🤠" size="lg" width="100%" onChange={e => {setSearchPlace(e.target.value)}}>
+                                    <option value="CUU">Chihuahua</option>
+                                    <option value="juarez">Juarez</option>
+                                    <option value="elpaso">El Paso TX</option>
+                                    <option value="cuauhtemoc">Cuauhtemoc</option>
+                                    <option value="parral">Parral</option>
+                                    <option value="delicias">Delicias</option>
+                                    <option value="meoqui">Meoqui</option>
+                                    <option value="creel">Creel</option>
+                                </Select>
+                                <Button variantColor="red"  my={19} size={["lg"]} width="100%" onClick={(e) => {handleClick(e)}}>{buttonText}</Button>
                     </Box>
                 </Flex>
             )}
@@ -71,5 +97,5 @@ export default WelcomeBlock;
 
 //Function to Show Toast Eror
 const ShowErrorToast = (toast, title, description) => {
-    toast({ title: title, description: description, status: "warning", duration: 9000, isClosable: true })
+    toast({ title: title, description: description, status: "error", duration: 5000, isClosable: true })
 }
