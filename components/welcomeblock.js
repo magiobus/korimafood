@@ -21,7 +21,6 @@ const WelcomeBlock = props => {
     const handleClick = async () => {
         setStatus({...status, isLoading: true})
 
-        setTimeout(async () => { 
             try {
                 let response = await axios.get(chihuahuaSheetUrl)
                 let placesData = parseSheetJson(response)
@@ -32,7 +31,6 @@ const WelcomeBlock = props => {
                 setStatus({...status, isLoading: false, showPlace: false})
                 ShowErrorToast(toast, "Ocurrió un error", "No pudimos traer tu recomendación u.u")
             }  
-        }, 2000);
     }
 
     //object deconstructions from state and props

@@ -1,7 +1,8 @@
 import { useEffect, useState} from 'react';
 import Loading from './loading';
 import loadingPhrases from '../lib/loadingphrases'
-import { Button, Heading, Text, Flex, Box, Image, Badge} from '@chakra-ui/core';
+import {titleParser} from '../helpers/titleParser';
+import { Button, Heading, Text, Flex, Box, Image, CircularProgress, Link} from '@chakra-ui/core';
 
 const Place = props => {
 
@@ -21,10 +22,14 @@ const Place = props => {
             let newPlaces = _places.filter(_place => { return _place.id != randomPlace.id })
             _setPlaces(newPlaces)
             setPlaceLoading(false)
-        }, 1300);
+        }, 300);
     }
 
     const getRandomLoadingPhrase = (loadingPhrases) => { return loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)]; }
+
+    const handlePhotoLoading = () => {
+        setPhotoLoading(false)
+    }
 
     if(selectedPlace){
         return (
@@ -35,14 +40,31 @@ const Place = props => {
                         <>
                             <Flex align={["center", "center", "center", "left"]} direction={["column-reverse", "column-reverse", "column-reverse", "row"]} justify="start" >
                                 <Flex direction="column" justify="center">
-                                    <Heading as="h1" color="red.600" mb={5} textAlign={["center", "center", "center", "left"]}>{selectedPlace.name }</Heading>
-                                    <Box bg="red.100" py={2} px={4} rounded="10px" width={["100%", "100%", "100%", "90%"]}>
-                                        <Text textAlign={["center", "center", "center", "left"]} fontSize={["lg", "lg", "lg", "2xl"]} color="gray.900" ><b>{selectedPlace.description}</b></Text>
+                                    <Heading as="h1" color="red.600" mb={0} textAlign={["center", "center", "center", "left"]} fontSize={["2xl", "2xl", "2xl", "3xl"]}>{selectedPlace.title}</Heading>
+                                    <Text textAlign={["center", "center", "center", "left"]} as="cite" mb={2} py={1}>{selectedPlace.address}</Text>
+                                    
+                                    {selectedPlace.review && (
+                                        <Box my={4} textAlign={["center", "center", "center", "left"]}>
+                                            <Text as="em">{selectedPlace.review}</Text>
+                                        </Box>
+                                    )}
+                                    
+                                    <Box textAlign={["center", "center", "center", "left"]} mt={2}>
+                                        <Link href={selectedPlace.mapsUrl} isExternal >
+                                            <Button variantColor="red" border="none" mb={4}>¿Cómo llegar? 🚖</Button>
+                                        </Link>
+                                        {selectedPlace.website && (
+                                            <Link href={selectedPlace.website} isExternal >
+                                                <Button variantColor="red" border="none" mx={4} mb={4}>Website 💻</Button>
+                                            </Link>
+                                        )}                                        
                                     </Box>
+                                    <Button onClick={() => getRandomPlace()} size="lg" variantColor="red" border="none" mt={5} p={5} width={["100%", "100%", "100%", "80%", "90%"]}>Recomiendame otro lugar 🙏🏻</Button>
                                 </Flex>
-                                <Image size={["100%", "250px", "250", "300px", "300px"]} rounded="20px" src={selectedPlace.coverUrl} alt="Korima Food Place" />
+                                <Box mx={4}>
+                                    <Image size={["100%", "250px", "250", "300px", "300px"]} rounded="20px" src={selectedPlace.photoUrl} alt="Korima Food Place" />
+                                </Box>
                             </Flex>
-                            <Button onClick={() => getRandomPlace()} size={["lg"]} variantColor="red" mt={10}>Recomiendame otro lugar</Button>
                         </>
                     )}
                 </Box>
