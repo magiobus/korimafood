@@ -63,9 +63,6 @@ const Home = () => {
         <Button mt={5} variantColor="red" border="none">Anunciate en Korima Food</Button>
       )}
 
-
-      
-
       {/* -------CSS------- */}
 
       <style jsx>{`
@@ -76,7 +73,7 @@ const Home = () => {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          background-image: url('/images/background.jpg');
+          background-image: url('./images/background.jpg');
           background-position: center;
           background-repeat: no-repeat;
           background-size: cover;

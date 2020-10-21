@@ -64,7 +64,7 @@ const Place = props => {
                                         )}                                        
                                     </Box>
                                     <Button onClick={() => getRandomPlace()} size="lg" variantColor="red" border="none" mt={5} p={5} width={["100%", "100%", "100%", "80%", "90%"]}>Recomiendame otro lugar 🙏🏻</Button>
-                                    <Button mt={5} p={5} variantColor="red" border="none" width={["100%", "100%", "100%", "80%", "90%"]} onClick={e => {router.push('/addPlace')} }>Agrega un Lugar</Button>
+                                    <Button mt={5} p={5} variantColor="red" border="none" width={["100%", "100%", "100%", "80%", "90%"]} onClick={e => {router.push('/agregarlugar')} }>Agrega un Lugar 🏠</Button>
                                 </Flex>
                                 <Box mx={4}>
                                     <Image size={["100%", "250px", "250", "300px", "300px"]} rounded="20px" src={selectedPlace.photoUrl} alt="Cargando Imagen..." />
