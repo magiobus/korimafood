@@ -1,5 +1,5 @@
 //Impot Components
-import { Flex, Box, Heading, Text, Button, useToast} from '@chakra-ui/core';
+import { Flex, Box, Heading, Text, Button, useToast, Tag} from '@chakra-ui/core';
 import Place from './place'
 import Loading from './loading'
 //Import functions
@@ -34,7 +34,7 @@ const WelcomeBlock = props => {
     }
 
     //object deconstructions from state and props
-    const {heading, description, buttonText} = props
+    const {heading, description, place, buttonText} = props
     const {showPlace, isLoading} = status;
 
     return ( 
@@ -45,7 +45,11 @@ const WelcomeBlock = props => {
                     <Box textAlign="center" bg="gray.50" borderWidth="1px" rounded="10px" p={5}>
                         <>
                             <Heading as="h1" size={["2xl"]} color="red.500" mb={3}>{heading}</Heading>
-                            <Text textAlign="center" m={0} fontSize={["lg", "xl", "2xl"]} align="center" color="gray.600"><b>{description}</b></Text>
+                            <Text textAlign="center" m={0} fontSize={["lg", "xl", "2xl"]} align="center" color="gray.600">
+                                <b>{description} 
+                                    <Tag variantColor="red" rounded="10px" mt={2} px={4} py={2}>{place}</Tag>
+                                </b>
+                            </Text>
                             <Button variantColor="red"  my={19} size={["lg"]} onClick={(e) => {handleClick(e)}}>{buttonText}</Button>
                         </>
                     </Box>

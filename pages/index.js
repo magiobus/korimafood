@@ -5,30 +5,40 @@ import React, { useState, useEffect} from 'react';
 
 const Home = () => {
   let emojisList = ["🌮", "🌯", "🥑", "🍰", "🍺", "🍔", "🍜", "🥩", "🥦", "🥙"]
+  let placesList = ["Cd. Chihuahua", "Cd. Juarez", "El Paso TX", "Cd. Cuauthemoc", "Delicias", "Meoqui", "Creel"]
   const [title, setTitle] = useState("Korima Food " + emojisList[0] )
+  const [place, setPlace] = useState(placesList[0])
 
 
   useEffect(() => {
     let emojiIndex = 0
+    let placeindex = 0
     setInterval(() => {
       emojiIndex ++
+      placeindex ++
       if(emojiIndex === emojisList.length-1){emojiIndex = 0}
+      if(placeindex === placesList.length-1){placeindex = 0}
       setTitle("Korima Food " + emojisList[emojiIndex])
-      }, 1300);
+      setPlace(placesList[placeindex])
+      }, 1500);
     }, [])
+
+    
+
+
 
     
 
   return (
     <div className="container">
       <NextSeo
-      title={title}  
-      description="Encuentra lugares de comida en la ciudad de Chihuahua México"
+      title={`${title} - Comida en Chihuahua México`}  
+      description="Encuentra lugares de comida en el estado de Chihuahua México - ELP"
       canonical="https://www.korimafood.com/"
       openGraph={{
         url: 'https://www.korimafood.com/',
         title: 'Korima Food 🌮',
-        description: 'Encuentra un lugar distinto para comer en la ciudad de Chihuahua',
+        description: 'Encuentra lugares de comida en el estado de Chihuahua México - ELP',
         images: [ {url: 'http://korimafood.com/images/opengraph.jpg', width: 1280, height: 720, alt: 'Korima Food, Comida en Chihuahua'}],
         site_name: 'Korima Food 🌮, lugares de comida en Chihuahua México',
       }}
@@ -37,7 +47,8 @@ const Home = () => {
       
       <WelcomeBlock 
         heading={title} 
-        description="Encuentra un lugar distinto para comer en la ciudad de Chihuahua"
+        description="Encuentra un lugar distinto para comer en "
+        place={place}
         buttonText="Recomiendame un lugar"
       /> 
 
