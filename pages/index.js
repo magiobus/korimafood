@@ -1,6 +1,7 @@
 import { NextSeo } from 'next-seo';
 import WelcomeBlock from '../components/welcomeblock';
 import React, { useState, useEffect} from 'react';
+import { Button} from '@chakra-ui/core';
 import MadeBy from '../components/madeby'
 
 
@@ -9,7 +10,7 @@ const Home = () => {
   let placesList = ["Cd. Chihuahua", "Cd. Juarez", "El Paso TX", "Cd. Cuauthemoc", "Delicias", "Meoqui", "Creel"]
   const [title, setTitle] = useState("Korima Food " + emojisList[0] )
   const [place, setPlace] = useState(placesList[0])
-
+  const [footer, setFooter] = useState('default')
 
   useEffect(() => {
     let emojiIndex = 0
@@ -51,9 +52,17 @@ const Home = () => {
         description="Encuentra un lugar distinto para comer en "
         place={place}
         buttonText="Recomiendame un lugar"
+        setFooter={setFooter}
       /> 
 
-      <MadeBy/>
+      {footer === 'default' && (
+        <MadeBy/>
+      )}
+
+      {footer === 'addPlace' && (
+        <Button mt={5} variantColor="red" border="none">Anunciate en Korima Food</Button>
+      )}
+
 
       
 

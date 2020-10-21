@@ -44,6 +44,7 @@ const WelcomeBlock = props => {
                 let placesData = parseSheetJson(response)
                 setPlaces(placesData) //saves places list in state
                 setStatus({...status, isLoading: false, showPlace: true}) //updates State
+                setFooter('addPlace')
             } catch (error) {
                 console.log("error =>", error)
                 setStatus({...status, isLoading: false, showPlace: false})
@@ -52,7 +53,7 @@ const WelcomeBlock = props => {
     }
 
     //object deconstructions from state and props
-    const {heading, description, place, buttonText} = props
+    const {heading, description, place, buttonText, setFooter} = props
     const {showPlace, isLoading} = status;
 
     return ( 

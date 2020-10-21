@@ -1,8 +1,9 @@
 import { useEffect, useState} from 'react';
+import { useRouter } from 'next/router'
 import Loading from './loading';
 import loadingPhrases from '../lib/loadingphrases'
 import {titleParser} from '../helpers/titleParser';
-import { Button, Heading, Text, Flex, Box, Image, CircularProgress, Link} from '@chakra-ui/core';
+import { Button, Heading, Text, Flex, Box, Image, Link} from '@chakra-ui/core';
 
 const Place = props => {
 
@@ -11,6 +12,9 @@ const Place = props => {
     const [_places, _setPlaces] = useState([...places]) //copy of places in local
     const [placeLoading, setPlaceLoading] = useState(false)
     const [loadingPhrase, setLoadingPhrase] = useState(loadingPhrases[0])
+
+    const router = useRouter()
+
     useEffect(() => { getRandomPlace(places) }, [])
 
     const getRandomPlace = () => {
@@ -60,11 +64,13 @@ const Place = props => {
                                         )}                                        
                                     </Box>
                                     <Button onClick={() => getRandomPlace()} size="lg" variantColor="red" border="none" mt={5} p={5} width={["100%", "100%", "100%", "80%", "90%"]}>Recomiendame otro lugar 🙏🏻</Button>
+                                    <Button mt={5} p={5} variantColor="red" border="none" width={["100%", "100%", "100%", "80%", "90%"]} onClick={e => {router.push('/addPlace')} }>Agrega un Lugar</Button>
                                 </Flex>
                                 <Box mx={4}>
                                     <Image size={["100%", "250px", "250", "300px", "300px"]} rounded="20px" src={selectedPlace.photoUrl} alt="Cargando Imagen..." />
                                 </Box>
                             </Flex>
+
                         </>
                     )}
                 </Box>
