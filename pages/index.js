@@ -1,6 +1,7 @@
 import { NextSeo } from 'next-seo';
 import WelcomeBlock from '../components/welcomeblock';
 import React, { useState, useEffect} from 'react';
+import MadeBy from '../components/madeby'
 
 
 const Home = () => {
@@ -51,6 +52,10 @@ const Home = () => {
         place={place}
         buttonText="Recomiendame un lugar"
       /> 
+
+      <MadeBy/>
+
+      
 
       {/* -------CSS------- */}
 
