@@ -29,8 +29,6 @@ const WelcomeBlock = props => {
     const [searchPlace, setSearchPlace] = useState('')
 
     //----- EVENTS -----//
-
-
     const handleClick = async () => {
 
         if(!searchPlace){
@@ -69,7 +67,7 @@ const WelcomeBlock = props => {
                                 </b>
                             </Text>
                                <Select placeholder="Elige una ciudad 🤠" size="lg" width="100%" onChange={e => {setSearchPlace(e.target.value)}}>
-                                    <option value="CUU">Chihuahua</option>
+                                    <option value="chihuahua">Chihuahua</option>
                                     <option value="juarez">Juarez</option>
                                     <option value="elpaso">El Paso TX</option>
                                     <option value="cuauhtemoc">Cuauhtemoc</option>
