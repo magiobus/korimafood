@@ -80,7 +80,7 @@ const Place = props => {
         return (
             <Flex align="center" justify="center" direction="column" mx={2} width={["100%", "95%", "80%", "75%"]}>
                 <Box textAlign="center" bg="gray.50" borderWidth="1px" rounded="10px" p={5}>
-                    <Heading as="h1" color="red.600">Ya no tengo recomendaciones u.u</Heading>
+                    <Heading as="h1" color="red.600">Ya no tengo recomendaciones uwu</Heading>
                 </Box>
             </Flex>
         )

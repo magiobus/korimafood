@@ -1,4 +1,4 @@
-// ADD PLACE
+// ADD NEWSLETTER 
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     try {
         const data = req.body
         //connect to google sheets and save
-        const submissionSheetIndex = 8;
+        const submissionSheetIndex = 9;
         await addSubmission(data, submissionSheetIndex)
 
         //respond to the frontend...

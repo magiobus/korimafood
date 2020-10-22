@@ -1,9 +1,8 @@
 import { NextSeo } from 'next-seo';
 import WelcomeBlock from '../components/welcomeblock';
 import React, { useState, useEffect} from 'react';
-import { Button} from '@chakra-ui/core';
 import MadeBy from '../components/madeby'
-
+import {Newsletter} from '../components/newsletter'
 
 const Home = () => {
   let emojisList = ["🌮", "🌯", "🥑", "🍰", "🍺", "🍔", "🍜", "🥩", "🥦", "🥙"]
@@ -54,8 +53,8 @@ const Home = () => {
         <MadeBy/>
       )}
 
-      {footer === 'addPlace' && (
-        <Button mt={5} variantColor="red" border="none">Anunciate en Korima Food</Button>
+      {footer === 'newsletter' && (
+        <Newsletter/>
       )}
 
       {/* -------CSS------- */}
