@@ -27,9 +27,9 @@ export default async function handler(req, res) {
 
 
 const addSubmission = async (rows, sheetIndex) => {
-    console.log("inside add submission function.... backend")
     // spreadsheet key is the long id in the sheets URL
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+
     // use service account creds
     await doc.useServiceAccountAuth({ 
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL, 
