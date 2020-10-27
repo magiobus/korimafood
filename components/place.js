@@ -3,11 +3,15 @@ import { useRouter } from 'next/router'
 import Loading from './loading';
 import loadingPhrases from '../lib/loadingphrases'
 import {titleParser} from '../helpers/titleParser';
-import { Button, Heading, Text, Flex, Box, Image, Link} from '@chakra-ui/core';
+import { Button, Heading, Text, Flex, Box, Image, Link, useToast} from '@chakra-ui/core';
+import axios from 'axios';
+
 
 const Place = props => {
 
-    const {places} = props;
+    const toast = useToast(); //toast for showing errors
+
+    const {places, sheetIndex} = props;
     const [selectedPlace, setSelectedPlace] = useState({});
     const [_places, _setPlaces] = useState([...places]) //copy of places in local
     const [placeLoading, setPlaceLoading] = useState(false)
@@ -28,6 +32,21 @@ const Place = props => {
             setPlaceLoading(false)
         }, 300);
     }
+
+    const removePlaceFromSheet = async (id) => {
+         try {
+             let response = await axios.post('/api/deleteplace', { id, sheetIndex })
+             console.log("haicnedo req =>", response)
+
+            if(response.status === 200){
+                toast({ title: "Si se borro!", description: "Todo cool my friend", status: "sucess", duration: 5000, isClosable: true })
+
+            }
+        } catch (error) {
+            toast({ title: "NO se borro!", description: "No se pudo borrar", status: "error", duration: 5000, isClosable: true })
+        }
+    }
+
 
     const getRandomLoadingPhrase = (loadingPhrases) => { return loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)]; }
 
@@ -65,12 +84,13 @@ const Place = props => {
                                     </Box>
                                     <Button onClick={() => getRandomPlace()} size="lg" variantColor="red" border="none" mt={5} p={5} width={["100%", "100%", "100%", "80%", "90%"]}>Recomiendame otro lugar 🙏🏻</Button>
                                     <Button mt={5} p={5} variantColor="red" border="none" width={["100%", "100%", "100%", "80%", "90%"]} onClick={e => {router.push('/agregarlugar')} }>Agrega un Lugar 🏠</Button>
+                                    <Button mt={5} p={5} variantColor="red" border="none" width={["100%", "100%", "100%", "80%", "90%"]} onClick={() => {removePlaceFromSheet(selectedPlace.id)} }>Borrar un Lugar</Button>
+
                                 </Flex>
                                 <Box mx={4}>
                                     <Image size={["100%", "250px", "250", "300px", "300px"]} rounded="20px" src={selectedPlace.photoUrl} alt="Cargando Imagen..." />
                                 </Box>
                             </Flex>
-
                         </>
                     )}
                 </Box>

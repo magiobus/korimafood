@@ -9,14 +9,14 @@ import {parseSheetJson} from '../lib/sheetparser'
 //Import Variables
 
 const sheetsUrls = {
-    "chihuahua": process.env.NEXT_PUBLIC_CUU_SHEET_URL, 
-    "juarez": process.env.NEXT_PUBLIC_JUAREZ_SHEET_URL,
-    "elpaso": process.env.NEXT_PUBLIC_ELP_SHEET_URL,
-    "cuauhtemoc": process.env.NEXT_PUBLIC_CUAUHTEMOC_SHEET_URL,
-    "parral": process.env.NEXT_PUBLIC_PARRAL_SHEET_URL,
-    "delicias": process.env.NEXT_PUBLIC_DELICIAS_SHEET_URL,
-    "meoqui": process.env.NEXT_PUBLIC_MEOQUI_SHEET_URL,
-    "creel": process.env.NEXT_PUBLIC_CREEL_SHEET_URL,
+    "chihuahua": {url: process.env.NEXT_PUBLIC_CUU_SHEET_URL, sheetIndex: 0}, 
+    "juarez": {url: process.env.NEXT_PUBLIC_JUAREZ_SHEET_URL, sheetIndex: 1},
+    "elpaso": {url: process.env.NEXT_PUBLIC_ELP_SHEET_URL, sheetIndex: 2},
+    "cuauhtemoc": {url: process.env.NEXT_PUBLIC_CUAUHTEMOC_SHEET_URL, sheetIndex: 3},
+    "parral": {url: process.env.NEXT_PUBLIC_PARRAL_SHEET_URL, sheetIndex:4},
+    "delicias": {url: process.env.NEXT_PUBLIC_DELICIAS_SHEET_URL, sheetIndex: 5},
+    "meoqui": {url: process.env.NEXT_PUBLIC_MEOQUI_SHEET_URL, sheetIndex: 6},
+    "creel": {url:process.env.NEXT_PUBLIC_CREEL_SHEET_URL, sheetIndex: 7},
 }
 
 
@@ -38,7 +38,7 @@ const WelcomeBlock = props => {
 
         setStatus({...status, isLoading: true})
             try {
-                let response = await axios.get(sheetsUrls[searchPlace])
+                let response = await axios.get(sheetsUrls[searchPlace].url)
                 let placesData = parseSheetJson(response)
                 setPlaces(placesData) //saves places list in state
                 setStatus({...status, isLoading: false, showPlace: true}) //updates State
@@ -85,7 +85,7 @@ const WelcomeBlock = props => {
             {isLoading && ( <Loading message="Recorriendo la ciudad en busqueda de tu nuevo lugar favorito"/> )}
 
             {/* ---------- Showing Place Component -------- */}
-            {(showPlace && !isLoading && places.length > 0) && ( <Place places={places} /> )}
+            {(showPlace && !isLoading && places.length > 0) && ( <Place places={places} sheetIndex={sheetsUrls[searchPlace].sheetIndex} /> )}
          </>
 
      );
